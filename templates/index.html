@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text Classifier</title>
+</head>
+<body>
+    <h1>Enter your text</h1>
+    <form method="POST" action="{{url_for('predict_route')}}">
+        <textarea name="text" rows="10" cols="60" placeholder="Paste your text here..."></textarea><br><br>
+        <button type="submit">Predict</button>
+    </form>
+</body>
+</html>

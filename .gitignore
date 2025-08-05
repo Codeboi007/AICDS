@@ -1,2 +1,3 @@
 logistic_model.pkl
 vectorizer.pkl
+models/cnn_image_model.pth

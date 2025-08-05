@@ -2,8 +2,8 @@ import joblib
 import numpy as np
 
 # Load the updated Logistic Regression model and vectorizer
-model = joblib.load("logistic_model.pkl")
-vectorizer = joblib.load("vectorizer.pkl")
+model = joblib.load("./models/logistic_model.pkl")
+vectorizer = joblib.load("./models/vectorizer.pkl")
 
 def predict(text):
     if not text.strip():

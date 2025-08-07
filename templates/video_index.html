@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Prediction</title>
+</head>
+<body>
+    <h2>Upload a Video to Check Authenticity</h2>
+    <form action="/video-predict" method="POST" enctype="multipart/form-data">
+        <input type="file" name="video" accept="video/*" required>
+        <br><br>
+        <input type="submit" value="Predict">
+    </form>
+</body>
+</html>

@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
-from routes.text_predict import predict  # make sure this points to the updated predict
-from routes.image_predict import predict_image  # make sure this points to the updated predict
+from routes.text_predict import predict  
+from routes.image_predict import predict_image  
+from routes.video_predict import predict_video
 from werkzeug.utils import secure_filename
 import os
 
@@ -21,7 +22,7 @@ def text_page():
 
 @app.route('/video')
 def video_page():
-    return render_template('video.html')  
+    return render_template('video_index.html')  
 
 @app.route("/predict", methods=["POST"])
 def predict_route():
@@ -42,6 +43,20 @@ def image_route():
             return render_template('result.html', label=label, score=confidence, image_path=filepath)
     return render_template('index.html')
 
+@app.route("/video-predict", methods=["POST"])
+def video_route():
+    if 'video' not in request.files:
+        return render_template("result.html", text="No file", label="Error", score=0)
+    
+    file = request.files['video']
+    if file.filename == "":
+        return render_template("result.html", text="No file", label="Error", score=0)
+
+    filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+    file.save(filepath)
+
+    label, confidence = predict_video(filepath)
+    return render_template("result.html", text=file.filename, label=label, score=confidence)
 
 if __name__ == "__main__":
     app.run(debug=True)

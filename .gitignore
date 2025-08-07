@@ -2,4 +2,4 @@ logistic_model.pkl
 vectorizer.pkl
 models/cnn_image_model.pth
 models/video_crnn_resnet_model.pth
-routes/__pycache__
+training-data/

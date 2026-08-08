@@ -1,51 +1,66 @@
 # Repository
 
 ## Overview
-A Flask-based application providing prediction interfaces for image, video, and text data, supported by utilizing trained machine learning models.
+Provides a backend API for repository analysis workflows; generates repository documentation from parsed source.
+
+Project type: Unknown
+
+Parsed surface: **9 files** · **26 functions** · **6 classes**
 
 ## Architecture / How It Works
-The application is divided into training and prediction layers:
-- **Training**: Located in `training-code/`, these modules define datasets and model architectures (CNN, CRNN) and handle the training process.
-- **Prediction**: Located in `routes/`, these modules load models to perform inference on provided inputs.
-- **Routing**: `main.py` serves as the entry point, mapping web requests to the corresponding prediction handlers.
+- **api**: `routes/image_predict.py`, `routes/text_predict.py`, `routes/video_predict.py`
+- **docs**: `readme.md`, `README.md`
 
 ## Project Structure
 ```text
-.
-├── main.py
-├── routes/
-│   ├── image_predict.py
-│   ├── text_predict.py
-│   └── video_predict.py
-└── training-code/
-    ├── image-train.py
-    ├── text-train.py
-    └── video-train.py
+root/
+routes/
+  - routes/image_predict.py
+  - routes/text_predict.py
+  - routes/video_predict.py
+training-code/
+  - training-code/image-train.py
+  - training-code/text-train.py
+  - training-code/video-train.py
+main.py
 ```
 
 ## Key Components
-
-### Image Processing
-- **`training-code/image-train.py`**: Implements `HuggingfaceImageDataset` for data loading and `BasicCNN` for model architecture.
-- **`routes/image_predict.py`**: Implements `BasicCNN` and the `predict_image` function for inference.
-
-### Video Processing
-- **`training-code/video-train.py`**: Implements `VideoDataset` and the `CRNN` model architecture.
-- **`routes/video_predict.py`**: Implements `CRNN` and utility functions `extract_frames` and `predict_video`.
-
-### Text Processing
-- **`training-code/text-train.py`**: Handles text feature extraction and model training using `sklearn`.
-- **`routes/text_predict.py`**: Implements the `predict` function using `joblib` for model loading.
-
-### Application Entry
-- **`main.py`**: Contains Flask route handlers including `home`, `image_page`, and `text_page`.
+- **`training-code/image-train.py`**: 
+  - Symbols: `HuggingfaceImageDataset`, `BasicCNN`, `__init__()`, `__len__()`, `__getitem__()`
+  - Imports: PIL, datasets, io, sklearn.metrics
+- **`training-code/video-train.py`**: 
+  - Symbols: `VideoDataset`, `CRNN`, `__init__()`, `__len__()`, `__getitem__()`
+  - Imports: PIL, cv2, os, sklearn.metrics
+- **`main.py`**: 
+  - Symbols: `home()`, `image_page()`, `text_page()`
+  - Imports: flask, os, routes.image_predict, routes.text_predict
+- **`routes/video_predict.py`**: 
+  - Symbols: `CRNN`, `extract_frames()`, `predict_video()`, `__init__()`
+  - Imports: PIL, cv2, torch, torch.nn
+- **`routes/image_predict.py`**: 
+  - Symbols: `BasicCNN`, `predict_image()`, `__init__()`, `forward()`
+  - Imports: PIL, os, torch, torch.nn
+- **`training-code/text-train.py`**: 
+  - Symbols: no detected symbols
+  - Imports: pandas, sklearn.feature_extraction.text, sklearn.linear_model, sklearn.metrics
+- **`routes/text_predict.py`**: 
+  - Symbols: `predict()`
+  - Imports: joblib, numpy
+- **`readme.md`**: 
+  - Symbols: no detected symbols
+  - Imports: none
+- **`README.md`**: 
+  - Symbols: no detected symbols
+  - Imports: none
 
 ## Technologies Used
-- **Framework**: Flask
-- **Deep Learning**: PyTorch, Torchvision
-- **Data Science**: Scikit-learn, Pandas, NumPy
-- **Image/Video Processing**: OpenCV (cv2), PIL
-- **Utilities**: Joblib, Werkzeug
+- **py**: 7 file(s)
+- **md**: 2 file(s)
+- **Flask**
+- **PyTorch**
+- **Pandas**
+- **NumPy**
 
 ## Usage
 ```bash
@@ -53,5 +68,7 @@ python main.py
 ```
 
 ## Notes / Limitations
-- Model definitions (e.g., `BasicCNN`, `CRNN`) are duplicated across both training and prediction modules.
-- Text training and prediction modules do not share a common class-based model definition.
+- High coupling between `main.py` and `routes` modules.
+- Use of multiple deep learning frameworks (PIL, torch, torchvision).
+- Use of multiple machine learning libraries (sklearn, joblib).
+- Lack of clear separation of concerns between training and prediction code.
